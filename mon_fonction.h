@@ -141,17 +141,17 @@ void afich_liste(liste *l)
 {
     if(liste_est_vid(l)==1) printf("la liste est vide ");
     else{
-    l->fin= l->tete;
+        Film *current = l->tete;
         do
         {
-            printf("\n--->>le Nome de film est  : %s .",l->fin->n);
-            printf("\n--->>le titre de film est : %s .",l->fin->t);
-            printf("\n--->>le dure de film est  : %d .",l->fin->d);
-            printf("\n--->>le anne de film est  : %d .",l->fin->a);
+            printf("\n--->>le Nome de film est  : %s .",current->n);
+            printf("\n--->>le titre de film est : %s .",current->t);
+            printf("\n--->>le dure de film est  : %d .",current->d);
+            printf("\n--->>le anne de film est  : %d .",current->a);
             printf("\n|------->>\n");
-            l->fin=l->fin->FS;
+            current=current->FS;
 
-        } while (l->fin != NULL);
+        } while (current != NULL);
 }
 }
 //====>>7
@@ -263,10 +263,10 @@ liste *ajout_Milio(liste *l,int n)
 int nombre_des_eliment(liste *l)
 {
     int i=0;
-    l->fin=l->tete;
-    while (l->fin !=NULL)
+    Film *current = l->tete;
+    while (current !=NULL)
     {
-        l->fin=l->fin->FS;
+        current=current->FS;
         i++;
     }
     return i;
