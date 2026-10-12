@@ -158,7 +158,7 @@ void afich_liste(liste *l)
 
 liste *inverse_ordre(liste *l)
 {
-    if(liste_est_vid(l)==0) printf("\n |==>Error : la liste est vide !!! \n");
+    if(liste_est_vid(l)==1) printf("\n |==>Error : la liste est vide !!! \n");
     else{
         if ( nombre_des_eliment(l)==1) printf("\n >>> la liste adment 1 eliment \n");
         else
