@@ -282,22 +282,21 @@ void afich_elemient_position(liste *l,int p)
         printf("\n >>> Votre liste est vide. \n");
     }
     else{
-        if (p>m)
+        if (p < 1 || p > m)
         {
             system("clear");
             printf("\n >>>la position vous aver chisi n'est pas exit dan la liste la sit admen %d eliment\n",m);
         }
         else{
-            l->fin=l->tete;
-            int i=1;
-            for ( i = 1; i <= p; i++)
+            Film *current = l->tete;
+            for (int i = 1; i < p; i++)
             {
-                l->fin=l->fin->FS;
+                current=current->FS;
             }
-            printf("\n--->>le Nome de film est  : %s",l->fin->n);
-            printf("\n--->>le titre de film est : %s",l->fin->t);
-            printf("\n--->>le dure de film est  : %d",l->fin->d);
-            printf("\n--->>le anne de film est  : %d\n",l->fin->a);
+            printf("\n--->>le Nome de film est  : %s",current->n);
+            printf("\n--->>le titre de film est : %s",current->t);
+            printf("\n--->>le dure de film est  : %d",current->d);
+            printf("\n--->>le anne de film est  : %d\n",current->a);
 
         }
 
