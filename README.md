@@ -81,6 +81,52 @@ The insertion examples are experimental and should not be enabled without review
 
 Use the default creation-and-display flow as the starting example. The extra operations are learning exercises, not a validated general-purpose list library.
 
+## Non-interactive regression check
+
+With the compatible compiler described above, save the following as
+`list_check.cpp` beside `mon_fonction.h`. It checks that counting preserves the
+tail, reversing three nodes updates both endpoints, and reversing twice restores
+the original links. It also checks the single-node case.
+
+```cpp
+#include <cassert>
+#include "mon_fonction.h"
+
+int main() {
+    Film a = {}, b = {}, c = {};
+    a.FS = &b;
+    b.FS = &c;
+    liste l = {&a, &c, 3};
+
+    assert(nombre_des_eliment(&l) == 3);
+    assert(l.fin == &c && c.FS == NULL);
+    inverse_ordre(&l);
+    assert(l.tete == &c && c.FS == &b && b.FS == &a);
+    assert(l.fin == &a && a.FS == NULL && l.nb == 3);
+    assert(nombre_des_eliment(&l) == 3);
+    inverse_ordre(&l);
+    assert(l.tete == &a && a.FS == &b && b.FS == &c);
+    assert(l.fin == &c && c.FS == NULL && l.nb == 3);
+
+    liste single = {&c, &c, 1};
+    inverse_ordre(&single);
+    assert(single.tete == &c && single.fin == &c && c.FS == NULL);
+}
+```
+
+Compile and run it without disabling assertions (do not add `-DNDEBUG`):
+
+```sh
+g++ -std=c++11 -Wall -Wextra -pedantic list_check.cpp -o list-check.exe
+./list-check.exe
+```
+
+A successful run exits with code 0; the single-node case prints an informational
+message. An assertion failure indicates a regression. The nodes in this example
+are stack-allocated: do not pass this fixture to `suppr_position`, which calls
+`free`. This check does not validate interactive input or the experimental
+insertion/deletion operations.
+
 ## Input constraints
 
 The current implementation reads names and titles with `scanf("%s", ...)` into 10-character arrays. For predictable input:
