@@ -69,7 +69,7 @@ The additional examples in `main.cpp` are commented out. Uncomment only the oper
 
 ## Position conventions and limitations
 
-Positions used by `afich_elemient_position(l, p)` and `suppr_position(l, p)` start at **1**: position 1 refers to the head. Display rejects positions outside the current traversed length; deletion instead checks the stored `l->nb` counter.
+Positions used by `afich_elemient_position(l, p)` and `suppr_position(l, p)` start at **1**: position 1 refers to the head. Display rejects positions outside the current traversed length; deletion instead checks the stored `l->nb` counter. When deletion removes the tail, `fin` is moved to the preceding node; removing the only node resets both `tete` and `fin` to `NULL`.
 
 Despite its name, `ajout_Milio(l, n)` links a new node **after** the nth existing node, not before it. For example, inserting after position 2 in `A → B → C` is intended to produce `A → B → new → C`.
 
@@ -77,7 +77,6 @@ The insertion examples are experimental and should not be enabled without review
 
 - `ajout_tete`, `ajout_fin`, and `ajout_Milio` ignore the pointer returned by `creation_film`, which allocates a separate node; this can leave the linked node's fields uninitialized and leak memory.
 - These insertions do not update `l->nb`, so later deletion checks can disagree with the actual list length.
-- Deletion does not update `l->fin`; deleting the tail can leave a dangling tail pointer.
 
 Use the default creation-and-display flow as the starting example. The extra operations are learning exercises, not a validated general-purpose list library.
 

@@ -317,6 +317,9 @@ liste *suppr_position(liste *l, int p)
         l->tete = l->tete->FS;
         free(temp);
         l->nb--;
+        if (l->tete == NULL) {
+            l->fin = NULL;
+        }
     } else {
         Film* prec = l->tete;
         for (int i = 1; i < p-1; i++) {
@@ -324,7 +327,10 @@ liste *suppr_position(liste *l, int p)
         }
 
         Film* temp = prec->FS;
-        prec->FS = prec->FS->FS;
+        prec->FS = temp->FS;
+        if (temp == l->fin) {
+            l->fin = prec;
+        }
         free(temp);
         l->nb--;
     }
