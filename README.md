@@ -73,10 +73,10 @@ Positions used by `afich_elemient_position(l, p)` and `suppr_position(l, p)` sta
 
 Despite its name, `ajout_Milio(l, n)` links a new node **after** the nth existing node, not before it. For example, inserting after position 2 in `A → B → C` is intended to produce `A → B → new → C`.
 
-The insertion examples are experimental and should not be enabled without reviewing their implementation:
+The insertion examples are experimental and should not be enabled without reviewing their implementation. `ajout_tete` uses the node returned by `creation_film` and updates `tete`, `fin`, and `nb`, including when inserting into an empty list. The remaining insertion helpers still have known limitations:
 
-- `ajout_tete`, `ajout_fin`, and `ajout_Milio` ignore the pointer returned by `creation_film`, which allocates a separate node; this can leave the linked node's fields uninitialized and leak memory.
-- These insertions do not update `l->nb`, so later deletion checks can disagree with the actual list length.
+- `ajout_fin` and `ajout_Milio` ignore the pointer returned by `creation_film`, which allocates a separate node; this can leave the linked node's fields uninitialized and leak memory.
+- Those two insertions do not update `l->nb`, so later deletion checks can disagree with the actual list length.
 
 Use the default creation-and-display flow as the starting example. The extra operations are learning exercises, not a validated general-purpose list library.
 

@@ -186,13 +186,15 @@ liste *inverse_ordre(liste *l)
 
 liste *ajout_tete(liste *l)
 {
-    Film *f;
-	f=(Film*)malloc(sizeof(Film));
+    if (l == NULL) return NULL;
 
-	creation_film(f);
+    Film *f = creation_film(NULL);
+    if (f == NULL) return l;
 
-    f->FS=l->tete;
-    l->tete=f;
+    f->FS = l->tete;
+    l->tete = f;
+    if (l->fin == NULL) l->fin = f;
+    l->nb++;
 
     return l;
 }
