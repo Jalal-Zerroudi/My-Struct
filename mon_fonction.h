@@ -203,26 +203,23 @@ liste *ajout_tete(liste *l)
 
 liste *ajout_fin(liste *l)
 {
-    Film *f=(Film*)malloc(sizeof(Film));
+    if (l == NULL) return NULL;
 
-    creation_film(f);
+    Film *f = creation_film(NULL);
+    if (f == NULL) return l;
 
-    if(l->tete == NULL)
+    f->FS = NULL;
+    if (l->tete == NULL)
     {
-        l->tete=f;
+        l->tete = f;
+        l->fin = f;
     }
-    else{
-
-        l->fin=l->tete;
-
-        while (l->fin->FS != NULL)
-        {
-            l->fin=l->fin->FS;
-        }
-
-        f->FS=NULL;
-        l->fin->FS=f;
+    else
+    {
+        l->fin->FS = f;
+        l->fin = f;
     }
+    l->nb++;
 
     return l;
 }
@@ -231,35 +228,35 @@ liste *ajout_fin(liste *l)
 
 liste *ajout_Milio(liste *l,int n)
 {
-    int m=nombre_des_eliment(l);
-	if(l->tete== NULL) printf("\n >>> Votre liste est vide<<<\n");
-	else{
-		if(n>m)
-		{
-			system("cls");
-			printf("\n >>>la position n'est pas exit dan votre liste<<< \n");
-		}
-		else{
+    if (l == NULL || l->tete == NULL)
+    {
+        printf("\n >>> Votre liste est vide<<<\n");
+        return l;
+    }
 
-			Film *f=NULL;
-			f=(Film*)malloc(sizeof(Film));
+    int m = nombre_des_eliment(l);
+    if (n < 1 || n > m)
+    {
+        system("cls");
+        printf("\n >>>la position n'est pas exit dan votre liste<<< \n");
+        return l;
+    }
 
-			creation_film(f);
+    Film *f = creation_film(NULL);
+    if (f == NULL) return l;
 
-    		l->fin=l->tete;
+    Film *current = l->tete;
+    for (int i = 1; i < n; i++)
+    {
+        current = current->FS;
+    }
 
-    		int i=1;
+    f->FS = current->FS;
+    current->FS = f;
+    if (current == l->fin) l->fin = f;
+    l->nb++;
 
-    		for(i=1;i<n;i++)
-    		{
-    			l->fin=l->fin->FS;
-			}
-    		f->FS=l->fin->FS;
-    		l->fin->FS=f;
-			}
-		}
-
-	return l;
+    return l;
 }
 //=====>>11
 int nombre_des_eliment(liste *l)
