@@ -75,6 +75,8 @@ Despite its name, `ajout_Milio(l, n)` links a new node **after** the nth existin
 
 The insertion helpers use the node returned by `creation_film` and keep `tete`, `fin`, and `nb` synchronized. `ajout_fin` supports both empty and non-empty lists. `ajout_Milio(l, n)` accepts positions from 1 through the current list length and updates `fin` when insertion happens after the last node.
 
+If allocating a film fails during `creation_liste`, the function now returns the successfully created prefix without incrementing `nb` for the failed node. An allocation failure before the first film returns an initialized empty list, and the empty-list check also accepts a null list pointer.
+
 Use the default creation-and-display flow as the starting example. The extra operations remain interactive learning exercises, not a validated general-purpose list library.
 
 ## Non-interactive regression check
@@ -89,6 +91,8 @@ the original links. It also checks the single-node case.
 #include "mon_fonction.h"
 
 int main() {
+    assert(liste_est_vid(NULL) == 1);
+
     Film a = {}, b = {}, c = {};
     a.FS = &b;
     b.FS = &c;

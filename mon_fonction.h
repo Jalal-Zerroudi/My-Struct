@@ -106,11 +106,9 @@ liste* creation_liste()
     l->fin = NULL;
     l->nb = 0;
     do {
-        l->nb++;
         Film *f = creation_film(NULL);
         if (Film_est_vid(f)) {
             printf("\n |==>Error : Film n'est pas exit !!!\n");
-            free(f);
             break;
         }
         if (l->tete == NULL) {
@@ -120,10 +118,14 @@ liste* creation_liste()
             l->fin->FS = f;
             l->fin = f;
         }
+        l->nb++;
         printf("\n si vous avez ajouter un autre élément cliquez sur >y< ou >Y< :");
         c = getche();
     } while (c == 'y' || c == 'Y');
-        l->fin->FS=NULL;
+
+    if (l->fin != NULL) {
+        l->fin->FS = NULL;
+    }
     return l;
 }
 
@@ -131,7 +133,7 @@ liste* creation_liste()
 
 int liste_est_vid(liste*l)
 {
-	if(l->tete==NULL || l->nb==0 ) return 1;
+	if(l == NULL || l->tete==NULL || l->nb==0 ) return 1;
 	else return 0;
 }
 
