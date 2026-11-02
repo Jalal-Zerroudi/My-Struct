@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <conio.h>
 
 
 //------------------------------->> les Struct :
@@ -44,8 +43,26 @@ liste *ajout_Milio(liste *l,int n);               //10 n la position vous aver c
 int nombre_des_eliment(liste *l);                 //11 taile d'un liste nb de liste
 void afich_elemient_position(liste *l,int p);     //12 p la position de film vous aver aficher .
 liste *suppr_position(liste *l,int p);            //13
+char lire_choix(void);                             //14 portable replacement for getche()
 
 //---------->> la declaraton des fonctions :
+
+//====>>14
+
+char lire_choix(void)
+{
+    int c;
+    do {
+        c = getchar();
+    } while (c == '\n' || c == '\r');
+
+    if (c == EOF) return '\0';
+
+    int reste;
+    while ((reste = getchar()) != '\n' && reste != EOF) {
+    }
+    return (char)c;
+}
 
 //====>>1
 
@@ -120,7 +137,7 @@ liste* creation_liste()
         }
         l->nb++;
         printf("\n si vous avez ajouter un autre élément cliquez sur >y< ou >Y< :");
-        c = getche();
+        c = lire_choix();
     } while (c == 'y' || c == 'Y');
 
     if (l->fin != NULL) {
@@ -238,9 +255,7 @@ liste *ajout_Milio(liste *l,int n)
 
     int m = nombre_des_eliment(l);
     if (n < 1 || n > m)
-    {
-        system("cls");
-        printf("\n >>>la position n'est pas exit dan votre liste<<< \n");
+    {        printf("\n >>>la position n'est pas exit dan votre liste<<< \n");
         return l;
     }
 
@@ -278,15 +293,11 @@ void afich_elemient_position(liste *l,int p)
 {
     int m=nombre_des_eliment(l);
     if(l->tete==NULL)
-    {
-        system("clear");
-        printf("\n >>> Votre liste est vide. \n");
+    {        printf("\n >>> Votre liste est vide. \n");
     }
     else{
         if (p < 1 || p > m)
-        {
-            system("clear");
-            printf("\n >>>la position vous aver chisi n'est pas exit dan la liste la sit admen %d eliment\n",m);
+        {            printf("\n >>>la position vous aver chisi n'est pas exit dan la liste la sit admen %d eliment\n",m);
         }
         else{
             Film *current = l->tete;

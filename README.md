@@ -13,15 +13,16 @@ Keep both files in the same directory because `main.cpp` includes `mon_fonction.
 
 ## Requirements
 
-- A C++ compiler with `<conio.h>` and `getche()` support, such as MinGW on Windows.
+- A C++11-compatible compiler, such as GCC, Clang, or MinGW.
 - A terminal for the interactive prompts.
 
-> [!NOTE]
-> Most Linux and macOS toolchains do not provide `<conio.h>`. The project will need a small input-handling adaptation before it can be compiled on those platforms.
+The add-another-film prompt uses standard input and therefore works consistently on Windows,
+Linux, and macOS. Enter `y` or `Y`, then press Enter, to continue; any other response ends
+list creation.
 
 ## Build and run
 
-From the project directory, compile the program with a compatible compiler:
+From the project directory, compile the program:
 
 ```sh
 g++ -std=c++11 -Wall -Wextra -pedantic main.cpp -o my-struct.exe
@@ -81,7 +82,7 @@ Use the default creation-and-display flow as the starting example. The extra ope
 
 ## Non-interactive regression check
 
-With the compatible compiler described above, save the following as
+With a C++11-compatible compiler, save the following as
 `list_check.cpp` beside `mon_fonction.h`. It checks that counting preserves the
 tail, reversing three nodes updates both endpoints, and reversing twice restores
 the original links. It also checks the single-node case.

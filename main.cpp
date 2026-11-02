@@ -2,11 +2,10 @@
 int main(void)
 {
        liste *l;
-       Film *f;
 
 //------ creation une Film   ------>
     /*
-
+        Film *f = NULL;
         f=creation_film(f);
         afich_film(f);
 
@@ -23,7 +22,7 @@ int main(void)
 	/*
 
         l=ajout_tete(l);
-	    l=ajour_tete(l);
+	    l=ajout_tete(l);
 	    l=ajout_tete(l);
 
     */
@@ -54,7 +53,6 @@ int main(void)
 
     /*
 
-        system("clear");
         afich_liste(l);
 
     */
