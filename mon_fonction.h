@@ -74,10 +74,10 @@ Film* creation_film(Film *f)
     	printf("\n>>>Enter les information de nouvel film :\n");
 
 			printf("\n   --->Enter le nom de film   :");
-    		scanf("%s",f->n);
+    		scanf("%9s",f->n);
 
     		printf("\n   --->Enter le titre de film :");
-    		scanf("%s",f->t);
+    		scanf("%9s",f->t);
 
     		printf("\n   --->Enter l'anner de film  :");
     		scanf("%d",&f->a);
