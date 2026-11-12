@@ -279,6 +279,8 @@ liste *ajout_Milio(liste *l,int n)
 int nombre_des_eliment(liste *l)
 {
     int i=0;
+    if (l == NULL) return 0;
+
     Film *current = l->tete;
     while (current !=NULL)
     {
@@ -292,7 +294,7 @@ int nombre_des_eliment(liste *l)
 void afich_elemient_position(liste *l,int p)
 {
     int m=nombre_des_eliment(l);
-    if(l->tete==NULL)
+    if(l == NULL || l->tete==NULL)
     {        printf("\n >>> Votre liste est vide. \n");
     }
     else{
@@ -319,7 +321,7 @@ void afich_elemient_position(liste *l,int p)
 
 liste *suppr_position(liste *l, int p)
 {
-    if (p < 1 || p > l->nb) {
+    if (l == NULL || p < 1 || p > l->nb) {
         printf("\n |==>Error : la position n'est pas valide !!! \n");
         return l;
     }
@@ -349,4 +351,5 @@ liste *suppr_position(liste *l, int p)
 
     return l;
 }
+
 
