@@ -352,4 +352,3 @@ liste *suppr_position(liste *l, int p)
     return l;
 }
 
-
