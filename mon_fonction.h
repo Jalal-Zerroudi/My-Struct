@@ -1,4 +1,7 @@
 #include <stdbool.h>  // true or false <==> 1 or 0
+#include <ctype.h>
+#include <errno.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,6 +47,8 @@ int nombre_des_eliment(liste *l);                 //11 taile d'un liste nb de li
 void afich_elemient_position(liste *l,int p);     //12 p la position de film vous aver aficher .
 liste *suppr_position(liste *l,int p);            //13
 char lire_choix(void);                             //14 portable replacement for getche()
+int lire_mot(const char *invite, char valeur[10]); //15 reads one word of at most 9 characters
+int lire_entier(const char *invite, int *valeur);  //16 validates a complete integer line
 
 //---------->> la declaraton des fonctions :
 
@@ -64,6 +69,64 @@ char lire_choix(void)
     return (char)c;
 }
 
+//====>>15
+
+int lire_mot(const char *invite, char valeur[10])
+{
+    char ligne[128];
+    char supplement;
+
+    while (true) {
+        printf("%s", invite);
+        if (fgets(ligne, sizeof(ligne), stdin) == NULL) return 0;
+
+        if (strchr(ligne, '\n') == NULL && !feof(stdin)) {
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF) {
+            }
+            printf("\n |==>Error : saisie trop longue.\n");
+            continue;
+        }
+
+        if (sscanf(ligne, " %9s %c", valeur, &supplement) == 1) return 1;
+
+        printf("\n |==>Error : entrez un seul mot de 9 caractères maximum.\n");
+    }
+}
+
+//====>>16
+
+int lire_entier(const char *invite, int *valeur)
+{
+    char ligne[128];
+
+    while (true) {
+        printf("%s", invite);
+        if (fgets(ligne, sizeof(ligne), stdin) == NULL) return 0;
+
+        if (strchr(ligne, '\n') == NULL && !feof(stdin)) {
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF) {
+            }
+            printf("\n |==>Error : saisie trop longue.\n");
+            continue;
+        }
+
+        char *fin;
+        errno = 0;
+        long resultat = strtol(ligne, &fin, 10);
+        while (isspace((unsigned char)*fin)) fin++;
+
+        if (fin != ligne && *fin == '\0' && errno != ERANGE &&
+            resultat >= INT_MIN && resultat <= INT_MAX) {
+            *valeur = (int)resultat;
+            return 1;
+        }
+
+        printf("\n |==>Error : entrez un nombre entier valide.\n");
+    }
+}
+
 //====>>1
 
 Film* creation_film(Film *f)
@@ -73,17 +136,16 @@ Film* creation_film(Film *f)
 	else{
     	printf("\n>>>Enter les information de nouvel film :\n");
 
-			printf("\n   --->Enter le nom de film   :");
-    		scanf("%9s",f->n);
+        if (!lire_mot("\n   --->Enter le nom de film   :", f->n) ||
+            !lire_mot("\n   --->Enter le titre de film :", f->t) ||
+            !lire_entier("\n   --->Enter l'anner de film  :", &f->a) ||
+            !lire_entier("\n   --->Enter le dure de film  :", &f->d)) {
+            printf("\n |==>Error : saisie interrompue, film ignoré.\n");
+            free(f);
+            return NULL;
+        }
 
-    		printf("\n   --->Enter le titre de film :");
-    		scanf("%9s",f->t);
-
-    		printf("\n   --->Enter l'anner de film  :");
-    		scanf("%d",&f->a);
-
-    		printf("\n   --->Enter le dure de film  :");
-    		scanf("%d",&f->d);
+        f->FS = NULL;
 		}
         return f;
 }

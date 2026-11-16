@@ -130,10 +130,10 @@ insertion/deletion operations.
 
 ## Input constraints
 
-The current implementation reads names and titles with `scanf("%s", ...)` into 10-character arrays. For predictable input:
+Film creation validates each complete input line before storing it:
 
 - enter a single word for each name and title;
 - use no more than 9 characters per value;
-- enter whole numbers for the year and duration.
+- enter whole numbers within the platform's `int` range for the year and duration.
 
-These constraints reflect the current code and help avoid invalid or oversized input.
+Invalid words and numbers are rejected with another prompt. If standard input ends before all four fields are available, the partially created film is released and omitted from the list.
