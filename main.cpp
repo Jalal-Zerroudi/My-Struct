@@ -17,15 +17,6 @@ int main(void)
         afich_liste(l);
         printf("\n====! 1\n");
 
-        Film *current = l != NULL ? l->tete : NULL;
-        while (current != NULL)
-        {
-            Film *next = current->FS;
-            free(current);
-            current = next;
-        }
-        free(l);
-
 //------ poue ajouter au tete ----->
 
 	/*
@@ -65,5 +56,14 @@ int main(void)
         afich_liste(l);
 
     */
+    Film *current = l != NULL ? l->tete : NULL;
+    while (current != NULL)
+    {
+        Film *next = current->FS;
+        free(current);
+        current = next;
+    }
+    free(l);
+
     return 0;
 }
